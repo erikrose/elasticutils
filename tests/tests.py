@@ -105,6 +105,12 @@ class QueryTest(TestCase):
         es.delete_index('test')
 
 
+def test_weight():
+    eq_(S(FakeModel).weight(foo=2).query(foo='bar')._build_query(),
+        {'fields': ['id'],
+         'query': {'term': {'foo': {'value': 'bar', 'boost': 2}}}})
+
+
 def test_query_fields():
     """Make sure queries against a default set of fields works."""
     implicit = S(FakeModel).query_fields('fld1', 'fld2__text').query('boo')

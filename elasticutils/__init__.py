@@ -223,6 +223,26 @@ class S(object):
             return TypeError('query() takes at most one non-keyword argument.')
         return self._clone(next_step=('query_default_fields', args[0]))
 
+    def weight(self, **kw):
+        """
+        Set the per-field boosting of results.
+
+        Weights given here are added to any defaults or any previously
+        specified weights, though later references to the same field override
+        earlier ones.
+
+        Weights apply only to fields mentioned in the call to ``query()`` or
+        implicitly used due to a previous call to ``query_fields``.
+
+        Note: If we need to clear weights, add a ``clear_weights()``
+        method.
+
+        Note: If we ever need index boosting, ``weight_indices()``
+        might be nice.
+
+        """
+        return self
+
     def filter(self, *filters, **kw):
         """
         Returns a new S instance with the filter args combined to the existing
